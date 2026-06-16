@@ -18,9 +18,11 @@
 
     <h2>ID front photo</h2>
     <img src="{{ asset('storage/' . $client->identity_front_photo) }}" width="200">
+    <a href="{{ asset('storage/' . $client->identity_front_photo) }}" download>Download front photo</a>
 
     <h2>ID back photo</h2>
     <img src="{{ asset('storage/' . $client->identity_back_photo) }}" width="200">
+    <a href="{{ asset('storage/' . $client->identity_back_photo) }}" download>Download back photo</a>
 
     <a href="{{ route('clients.index') }}">Back to clients</a>
     <a href="{{ route('clients.edit', $client) }}">Edit client</a>
