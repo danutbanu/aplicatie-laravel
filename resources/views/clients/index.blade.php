@@ -11,6 +11,9 @@
             <p>{{ $client->email }}</p>
             <p>{{ $client->phone }}</p>
             <p>{{ $client->cnp }}</p>
+            <img src="" alt="">
+
+            <a href="{{ route('clients.edit', $client) }}">Edit</a>
 
             <a href="{{ route('clients.show', $client) }}">View</a>
         </div>

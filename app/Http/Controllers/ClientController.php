@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
@@ -55,15 +56,31 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $validated = $request->validated();
+
+        if ($request->hasFile('identity_front_photo')) {
+            Storage::disk('public')->delete($client->identity_front_photo);
+
+            $validated['identity_front_photo'] = $request->file('identity_front_photo')->store('clients', 'public');
+        }
+
+        if ($request->hasFile('identity_back_photo')) {
+            Storage::disk('public')->delete($client->identity_back_photo);
+
+            $validated['identity_back_photo'] = $request->file('identity_back_photo')->store('clients', 'public');
+        }
+
+        $client->update($validated);
+
+        return redirect()->route('clients.show', $client);
     }
 
     /**
