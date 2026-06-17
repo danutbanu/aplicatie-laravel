@@ -5,24 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use App\Services\ClientDocumentService;
 use App\Services\ClientService;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request, ClientService $clientService)
+    public function __construct(
+        private ClientService $clientService,
+        private ClientDocumentService $clientDocumentService,
+    ) {}
+
+    public function index(Request $request)
     {
-        $clients = $clientService->getFilteredClients($request);
+        $clients = $this->clientService->getFilteredClients($request);
         $counties = $this->counties();
 
         return view('clients.index', compact('clients', 'counties'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $counties = $this->counties();
@@ -30,28 +31,22 @@ class ClientController extends Controller
         return view('clients.create', compact('counties'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreClientRequest $request, ClientService $clientService)
+    public function store(StoreClientRequest $request)
     {
-        $clientService->createClient($request->validated(), $request);
+        $data = $request->validated();
 
-        return redirect()->route('clients.index');
+        $data = $this->clientDocumentService->uploadDocuments($request, $data);
+
+        $client = $this->clientService->createClient($data);
+
+        return redirect()->route('clients.show', $client);
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Client $client)
     {
         return view('clients.show', compact('client'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Client $client)
     {
         $counties = $this->counties();
@@ -59,22 +54,22 @@ class ClientController extends Controller
         return view('clients.edit', compact('client', 'counties'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateClientRequest $request, Client $client, ClientService $clientService)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        $clientService->updateClient($client, $request->validated(), $request);
+        $data = $request->validated();
+
+        $data = $this->clientDocumentService->replaceDocuments($request, $client, $data);
+
+        $this->clientService->updateClient($client, $data);
 
         return redirect()->route('clients.show', $client);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Client $client, ClientService $clientService)
+    public function destroy(Client $client)
     {
-        $clientService->deleteClient($client);
+        $this->clientDocumentService->deleteClientDocuments($client);
+
+        $this->clientService->deleteClient($client);
 
         return redirect()->route('clients.index');
     }

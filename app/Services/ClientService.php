@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ClientService
 {
@@ -59,32 +58,13 @@ class ClientService
         return $query->orderBy($sort, $direction)->paginate(10)->withQueryString();
     }
 
-    public function createClient(array $data, Request $request): Client
+    public function createClient(array $data): Client
     {
-        $data['identity_front_photo'] = $request->file('identity_front_photo')->store('clients', 'public');
-        $data['identity_back_photo'] = $request->file('identity_back_photo')->store('clients', 'public');
-
         return Client::create($data);
     }
 
-    public function updateClient(Client $client, array $data, Request $request): Client
+    public function updateClient(Client $client, array $data): Client
     {
-        if ($request->hasFile('identity_front_photo')) {
-            if ($client->identity_front_photo) {
-                Storage::disk('public')->delete($client->identity_front_photo);
-            }
-
-            $data['identity_front_photo'] = $request->file('identity_front_photo')->store('clients', 'public');
-        }
-
-        if ($request->hasFile('identity_back_photo')) {
-            if ($client->identity_back_photo) {
-                Storage::disk('public')->delete($client->identity_back_photo);
-            }
-
-            $data['identity_back_photo'] = $request->file('identity_back_photo')->store('clients', 'public');
-        }
-
         $client->update($data);
 
         return $client;
@@ -92,14 +72,6 @@ class ClientService
 
     public function deleteClient(Client $client): void
     {
-        if ($client->identity_front_photo) {
-            Storage::disk('public')->delete($client->identity_front_photo);
-        }
-
-        if ($client->identity_back_photo) {
-            Storage::disk('public')->delete($client->identity_back_photo);
-        }
-
         $client->delete();
     }
 }
