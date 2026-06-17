@@ -88,6 +88,11 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        Storage::disk('public')->delete($client->identity_front_photo);
+        Storage::disk('public')->delete($client->identity_back_photo);
+
+        $client->delete();
+
+        return redirect()->route('clients.index');
     }
 }
