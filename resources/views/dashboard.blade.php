@@ -11,7 +11,11 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                 </div>
+                @section('content')
+                    <a href="{{ route('clients.index') }}">Clients</a>
+                @endsection
             </div>
         </div>
     </div>
+
 </x-app-layout>

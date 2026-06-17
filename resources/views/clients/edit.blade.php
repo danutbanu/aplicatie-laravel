@@ -71,7 +71,17 @@
 
         <div>
             <label for="county">County</label>
-            <input id="county" type="text" name="county" value="{{ old('county', $client->county) }}">
+
+            <select id="county" name="county">
+                <option value="">Select county</option>
+
+                @foreach ($counties as $county)
+                    <option value="{{ $county }}" @selected(old('county', $client->county) === $county)>
+                        {{ $county }}
+                    </option>
+                @endforeach
+            </select>
+
             <x-input-error :messages="$errors->get('county')" />
         </div>
 

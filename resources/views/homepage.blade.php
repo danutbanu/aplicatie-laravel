@@ -1,5 +1,5 @@
 @extends('layouts.public')
 
 @section('content')
-    <h1>Home</h1>
+    <a href="{{ route('clients.index') }}">Clients</a>
 @endsection
