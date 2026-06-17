@@ -8,87 +8,141 @@ main {
     padding: 24px;
 }
 
-h1 {
+.page-title {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 20px;
 }
 
-h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 24px;
-    margin-bottom: 12px;
+.form-group {
+    margin-bottom: 16px;
 }
 
-form {
-    margin-bottom: 24px;
-}
-
-label {
+.form-label {
     display: block;
     margin-bottom: 6px;
     font-weight: 500;
 }
 
-input,
-select,
-textarea {
+.form-input,
+.form-select,
+.form-textarea {
     width: 100%;
     max-width: 420px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     padding: 8px 10px;
-    margin-bottom: 12px;
+    font-size: 14px;
 }
 
-textarea {
+.form-textarea {
     min-height: 100px;
 }
 
-button {
-    background: #2563eb;
-    color: white;
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #2563eb;
 }
 
-button:hover {
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
     background: #1d4ed8;
 }
 
-a {
+.btn-secondary {
+    background: #ffffff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover {
+    background: #f3f4f6;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.link {
     color: #2563eb;
+    font-weight: 500;
     text-decoration: none;
     margin-right: 8px;
 }
 
-a:hover {
+.link:hover {
     text-decoration: underline;
 }
 
-table {
+.link-warning {
+    color: #d97706;
+    font-weight: 500;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+.link-warning:hover {
+    text-decoration: underline;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-th,
-td {
+.table th,
+.table td {
     border-bottom: 1px solid #e5e7eb;
     padding: 10px;
     text-align: left;
 }
 
-th {
-    font-weight: 700;
+.table th {
     background: #f9fafb;
+    font-weight: 700;
 }
 
-img {
+.table form {
+    margin: 0;
+}
+
+.preview-image {
     display: block;
-    margin: 10px 0;
+    width: 150px;
+    max-width: 150px;
+    height: auto;
+    margin: 8px 0 12px;
     border-radius: 6px;
+    object-fit: cover;
 }
