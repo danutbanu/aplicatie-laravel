@@ -29,8 +29,7 @@ class UpdateClientRequest extends FormRequest
 
             'cnp' => [
                 'required',
-                'string',
-                'size:13',
+                'digits:13',
                 Rule::unique('clients', 'cnp')->ignore($this->client),
             ],
 

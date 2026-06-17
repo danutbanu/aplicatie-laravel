@@ -44,15 +44,44 @@
         <a href="{{ route('clients.index') }}">Reset filters</a>
     </form>
 
+    @php
+        $sortUrl = function ($column) {
+            $currentSort = request('sort');
+            $currentDirection = request('direction', 'desc');
+
+            $direction = $currentSort === $column && $currentDirection === 'asc' ? 'desc' : 'asc';
+
+            return route(
+                'clients.index',
+                array_merge(request()->query(), [
+                    'sort' => $column,
+                    'direction' => $direction,
+                ]),
+            );
+        };
+    @endphp
+
     <table>
         <thead>
             <tr>
-                <th>Full Name</th>
-                <th>CNP</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>County</th>
-                <th>Registration Date</th>
+                <th>
+                    <a href="{{ $sortUrl('first_name') }}">Full Name</a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('cnp') }}">CNP</a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('email') }}">Email</a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('phone') }}">Phone</a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('county') }}">County</a>
+                </th>
+                <th>
+                    <a href="{{ $sortUrl('created_at') }}">Registration Date</a>
+                </th>
                 <th>ID Documents</th>
                 <th>Actions</th>
             </tr>

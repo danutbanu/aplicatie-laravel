@@ -22,4 +22,11 @@ class Client extends Model
         'identity_back_photo',
         'notes',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'birth_date' => 'date',
+        ];
+    }
 }

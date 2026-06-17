@@ -25,7 +25,7 @@ class StoreClientRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'cnp' => 'required|string|size:13|unique:clients,cnp',
+            'cnp' => 'required|digits:13|unique:clients,cnp',
             'email' => 'required|email|unique:clients,email',
             'phone' => 'required|string|max:20',
             'birth_date' => 'required|date',
@@ -46,7 +46,7 @@ class StoreClientRequest extends FormRequest
             'first_name.required' => 'First name is required.',
             'last_name.required' => 'Last name is required.',
             'cnp.required' => 'CNP is required.',
-            'cnp.size' => 'CNP must have exactly 13 characters.',
+            'cnp.size' => 'CNP must have exactly 13 digits.',
             'cnp.unique' => 'This CNP already exists.',
             'email.required' => 'Email address is required.',
             'email.email' => 'Please enter a valid email address.',
