@@ -5,6 +5,8 @@
 
     <a href="{{ route('clients.create') }}">Add client</a>
 
+    <a href="{{ route('homepage') }}">HomePage</a>
+
     <form action="{{ route('clients.index') }}" method="GET">
         <div>
             <label for="search">Search by first name or last name</label>

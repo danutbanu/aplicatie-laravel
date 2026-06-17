@@ -39,7 +39,8 @@
 
         <div>
             <label for="birth_date">Birth date</label>
-            <input id="birth_date" type="date" name="birth_date" value="{{ old('birth_date', $client->birth_date) }}">
+            <input id="birth_date" type="date" name="birth_date"
+                value="{{ old('birth_date', $client->birth_date?->format('Y-m-d')) }}">
             <x-input-error :messages="$errors->get('birth_date')" />
         </div>
 
