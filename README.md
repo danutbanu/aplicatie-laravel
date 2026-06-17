@@ -1,59 +1,186 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Client Management
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel application for managing clients, with authentication, client CRUD, document upload, filtering, sorting and pagination.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- User registration
+- User login
+- User logout
+- Protected client management routes
+- Create client
+- View client details
+- Edit client
+- Delete client
+- Upload ID front photo
+- Upload ID back photo
+- View and download uploaded ID photos
+- Delete uploaded photos when the client is deleted
+- Search clients by first name or last name
+- Filter clients by CNP, email, phone and county
+- Sort clients by table columns
+- Paginated client list
+- Server-side validation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Docker
+- Laravel Sail
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Clone the repository:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone repository-url
+cd project-folder
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Copy the environment file:
 
-## Contributing
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install PHP dependencies:
 
-## Code of Conduct
+```bash
+sail composer install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Install JavaScript dependencies:
 
-## Security Vulnerabilities
+```bash
+sail npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Start Docker containers:
 
-## License
+```bash
+sail up -d
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# TEST-TEHNIC-APLICA-IE-LARAVEL-
+Generate the application key:
+
+```bash
+sail artisan key:generate
+```
+
+Run database migrations:
+
+```bash
+sail artisan migrate
+```
+
+Create the storage symbolic link:
+
+```bash
+sail artisan storage:link
+```
+
+Build frontend assets:
+
+```bash
+sail npm run build
+```
+
+Open the application in the browser:
+
+```txt
+http://localhost
+```
+
+## Environment configuration
+
+The project uses the `.env.example` file as a starting point for local configuration.
+
+For local development:
+
+```env
+APP_ENV=local
+APP_DEBUG=true
+```
+
+For production, internal errors and stack traces should not be displayed to final users:
+
+```env
+APP_ENV=production
+APP_DEBUG=false
+```
+
+## Database
+
+The project includes all necessary migrations.
+
+The main client data is stored in the `clients` table.
+
+## File storage
+
+Client ID photos are stored using Laravel's public storage disk.
+
+Uploaded files are saved in:
+
+```txt
+storage/app/public/clients
+```
+
+They are accessed publicly through:
+
+```txt
+public/storage
+```
+
+The following command must be executed once:
+
+```bash
+sail artisan storage:link
+```
+
+## Code structure
+
+The project follows Laravel conventions.
+
+Main files:
+
+```txt
+app/Http/Controllers/ClientController.php
+app/Http/Requests/StoreClientRequest.php
+app/Http/Requests/UpdateClientRequest.php
+app/Models/Client.php
+app/Services/ClientService.php
+app/Services/ClientDocumentService.php
+resources/views/clients/index.blade.php
+resources/views/clients/create.blade.php
+resources/views/clients/show.blade.php
+resources/views/clients/edit.blade.php
+database/migrations
+routes/web.php
+```
+
+## Security
+
+Client management routes are protected by authentication middleware.
+
+Validation is handled server-side through Laravel Form Requests.
+
+Business logic is separated from controllers and views using service classes.
+
+## Testing the application
+
+After installation, test the following:
+
+- Register a new user
+- Login
+- Logout
+- Create a client
+- Upload front and back ID photos
+- View client details
+- Download ID photos
+- Edit client data
+- Replace ID photos
+- Delete client
+- Confirm uploaded files are deleted
+- Search clients
+- Filter clients
+- Sort clients by table columns
+- Test pagination
